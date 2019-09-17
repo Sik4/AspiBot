@@ -1,3 +1,4 @@
+
 print("begin ! ")
 
 
@@ -7,6 +8,7 @@ class ReadInstructions:
         self.gridsize = []
         self.startposition = []
         self.instructions = []
+        self.directions = ["N", "E", "S", "W"]
 
     def generate(self):
         print("generate")
@@ -32,27 +34,46 @@ class AspiBot(ReadInstructions):
         self.y = int(readinstructions.startposition[1])
         self.max_x = int(readinstructions.gridsize[0])
         self.max_y = int(readinstructions.gridsize[1])
-        self.direction = readinstructions.startposition[2]
+        self.idirections = readinstructions.directions.index(readinstructions.startposition[2])
+        self.directions = readinstructions.directions
+        self.direction = readinstructions.directions[self.idirections]
 
     def moving(self, order):
         # print("order is ", order)
         if order != "A":
             if self.x < self.max_x and self.y < self.max_y:
-                self.direction = order
-                # print(self.direction)
+                if order == "D":
+                    if self.idirections == 3:
+                        self.idirections = 0
+                        self.direction = self.directions[self.idirections]
+                    else:
+                        self.idirections = self.idirections + 1
+                        self.direction = self.directions[self.idirections]
+                    print(self.direction)
+                elif order == "G":
+                    if self.idirections == 0:
+                        self.idirections = 4
+                        self.direction = self.directions[self.idirections]
+                    else:
+                        self.idirections = self.idirections - 1
+                        self.direction = self.directions[self.idirections]
+                    print(self.direction)
+                else:
+                    print("Where are you going ??")
             else:
                 print("You hit a wall ! ")
 
         if order == "A":
             if self.direction == "N":
                 self.y = (self.y + 1)
-            if self.direction == "S":
+            elif self.direction == "S":
                 self.y = self.y - 1
-            if self.direction == "E":
+            elif self.direction == "E":
                 self.x = self.x + 1
-            if self.direction == "W":
+            elif self.direction == "W":
                 self.x = self.x - 1
-        print(self.x, self.y, self.direction)
+        print("You are actually on position ", self.x, self.y, "facing ", self.direction)
+
 
 
 
