@@ -3,6 +3,7 @@ print("begin ! ")
 
 
 class ReadInstructions:
+    """ setting the grid """
     def __init__(self):
         self.file = "test.txt"
         self.gridsize = []
@@ -11,6 +12,7 @@ class ReadInstructions:
         self.directions = ["N", "E", "S", "W"]
 
     def generate(self):
+        """ Charging and reading the template file """
         print("generate")
         with open(self.file, "r") as file:
             lines = file.readlines()
@@ -30,6 +32,7 @@ class ReadInstructions:
 class AspiBot(ReadInstructions):
 
     def __init__(self, readinstructions):
+        """ Initializing the Robot """
         self.x = int(readinstructions.startposition[0])
         self.y = int(readinstructions.startposition[1])
         self.max_x = int(readinstructions.gridsize[0])
@@ -39,10 +42,13 @@ class AspiBot(ReadInstructions):
         self.direction = readinstructions.directions[self.idirections]
 
     def moving(self, order):
+        """ let's make this Robot move """
         # print("order is ", order)
         if order != "A":
+            """ Care for the walls """
             if self.x < self.max_x and self.y < self.max_y:
                 if order == "D":
+                    """ Could be made with itertools.cycle """
                     if self.idirections == 3:
                         self.idirections = 0
                         self.direction = self.directions[self.idirections]

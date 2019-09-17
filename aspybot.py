@@ -1,5 +1,7 @@
 from classes import *
 
+"""Run this file to launch the Bot ! """
+
 readinstructions = ReadInstructions()
 readinstructions.generate()
 
